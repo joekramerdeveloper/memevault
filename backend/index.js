@@ -8,10 +8,19 @@ app.use(cors());
 app.use(express.json());
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("MongoDB connection error:", err));
+  .then(() => {
+    console.log("✅ MongoDB connected");
 
-const memeRoutes = require('./routes/memes');
-app.use('/memes', memeRoutes);
+    const memeRoutes = require('./routes/memes');
+    app.use('/memes', memeRoutes);
 
-app.listen(3000, () => console.log("API running on port 3000"));
+    app.get('/ping', (req, res) => {
+      res.send('pong');
+    });
+
+    app.listen(3001, () => console.log("API running on port 3001"));
+
+  })
+  .catch(err => {
+    console.error("❌ MongoDB connection error:", err);
+  });
