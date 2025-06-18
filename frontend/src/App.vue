@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 const memes = ref([])
 const loading = ref(true)
 
-onMounted(async () => {
+const fetchMemes = async () => {
   try {
     const res = await fetch('http://localhost:3001/memes')
     memes.value = await res.json()
@@ -13,7 +13,24 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
-})
+}
+
+const deleteMeme = async (id) => {
+  try {
+    const res = await fetch(`http://localhost:3001/memes/${id}`, {
+      method: 'DELETE',
+    })
+    if (res.status === 204) {
+      memes.value = memes.value.filter((meme) => meme._id !== id)
+    } else {
+      console.error('Failed to delete meme. Status:', res.status)
+    }
+  } catch (err) {
+    console.error('Error deleting meme:', err)
+  }
+}
+
+onMounted(fetchMemes)
 </script>
 
 <template>
@@ -27,6 +44,8 @@ onMounted(async () => {
           <img :src="meme.url" alt="meme" width="200" />
           <p>{{ meme.caption }}</p>
           <small>{{ new Date(meme.date).toLocaleDateString() }}</small>
+          <br />
+          <button @click="deleteMeme(meme._id)">🗑 Delete</button>
         </li>
       </ul>
     </div>
@@ -41,5 +60,17 @@ img {
 li {
   list-style: none;
   margin: 1rem 0;
+}
+button {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: #e53e3e;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+button:hover {
+  background: #c53030;
 }
 </style>

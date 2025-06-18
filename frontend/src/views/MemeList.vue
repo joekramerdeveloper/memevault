@@ -1,28 +1,29 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+// import { ref, onMounted } from 'vue'
+// import axios from 'axios'
 
-const memes = ref([])
+// const memes = ref([])
 
-onMounted(async () => {
-  const res = await axios.get('http://localhost:3000/memes')
-  memes.value = res.data
-})
+// onMounted(async () => {
+//   const res = await axios.get('http://localhost:3001/memes')
+//   memes.value = res.data
+// })
 
-const deleteMeme = async (id) => {
-  try {
-    const res = await axios.delete(`http://localhost:3001/memes/${id}`)
-    if (res.status === 204) {
-      memes.value = memes.value.filter((meme) => meme._id !== id)
-    }
-  } catch (err) {
-    console.error('Failed to delete meme:', err)
-  }
-}
+// const deleteMeme = async (id) => {
+//   try {
+//     const res = await axios.delete(`http://localhost:3001/memes/${id}`)
+//     if (res.status === 204) {
+//       memes.value = memes.value.filter((meme) => meme._id !== id)
+//     }
+//   } catch (err) {
+//     console.error('Failed to delete meme:', err)
+//   }
+// }
 </script>
 
 <template>
-  <div class="p-4">
+  <div>this component is not used</div>
+  <!-- <div class="p-4">
     <h1 class="text-2xl font-bold mb-4">Meme Vault</h1>
     <ul class="space-y-4">
       <li v-for="meme in memes" :key="meme._id" class="border p-3 rounded">
@@ -37,5 +38,5 @@ const deleteMeme = async (id) => {
         </button>
       </li>
     </ul>
-  </div>
+  </div> -->
 </template>
