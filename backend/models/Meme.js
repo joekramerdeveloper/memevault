@@ -2,8 +2,8 @@
 const mongoose = require('mongoose');
 
 const memeSchema = new mongoose.Schema({
-  title: String,
-  imageUrl: String,
+  url: String,
+  caption: String,
   date: Date
 });
 
